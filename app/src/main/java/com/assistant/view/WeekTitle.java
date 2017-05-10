@@ -13,7 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Created by wan on 2016/10/12.
+ * Created by hyc on 2016/10/12.
  * 自定义标题栏，用来显示周一到周日
  */
 public class WeekTitle extends View {

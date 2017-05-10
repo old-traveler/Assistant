@@ -5,7 +5,6 @@ import com.assistant.bean.User;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import rx.Observable;
-import rx.Observer;
 
 /**
  * Created by hyc on 2017/5/10 15:40

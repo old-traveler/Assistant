@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.assistant.MainActivity;
 import com.assistant.R;
 import com.assistant.api.Api;
@@ -15,7 +14,6 @@ import com.assistant.bean.User;
 import com.assistant.http.ApiCallback;
 import com.assistant.http.ApiClient;
 import com.assistant.util.UserUtil;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -40,38 +38,38 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         UserUtil.init(LoginActivity.this);
-        if (!TextUtils.isEmpty(UserUtil.getCurrentUser().getRemember_code_app())){
+        if (!TextUtils.isEmpty(UserUtil.getCurrentUser().getRemember_code_app())) {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
         }
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        apiStores= ApiClient.retrofit().create(Api.class);
+        apiStores = ApiClient.retrofit().create(Api.class);
 
     }
 
     @OnClick(R.id.btn_login)
     public void onViewClicked() {
-        if (!isFilled()){
+        if (!isFilled()) {
             Toast.makeText(this, "请填写好信息", Toast.LENGTH_SHORT).show();
             return;
         }
         addSubscription(apiStores.login(edUsername.getText().toString(), edPassword.getText().toString()), new ApiCallback<User>() {
             @Override
             public void onSuccess(User model) {
-                if (model.getMsg().equals("ok")){
+                if (model.getMsg().equals("ok")) {
 
                     UserUtil.setCurrentUser(model);
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();
-                }else {
+                } else {
                     Toast.makeText(LoginActivity.this, "请确认账号密码是否正确", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(String msg) {
-                Toast.makeText(LoginActivity.this, "出错"+msg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "出错" + msg, Toast.LENGTH_SHORT).show();
             }
 
             @Override

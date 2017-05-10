@@ -9,18 +9,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.assistant.R;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Random;
 
 
 /**
- * Created by wan on 2016/10/16.
+ * Created by hyc on 2016/10/16.
  * GridView的适配器
  */
 public class AbsGridAdapter extends BaseAdapter {

@@ -58,28 +58,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        spinner = (Spinner)findViewById(R.id.switchWeek);
-        weekTitle= (WeekTitle) findViewById(R.id.week);
-        detailCource = (GridView)findViewById(R.id.courceDetail);
-        apiStores= ApiClient.retrofit().create(Api.class);
-        User user= UserUtil.getCurrentUser();
+        spinner = (Spinner) findViewById(R.id.switchWeek);
+        weekTitle = (WeekTitle) findViewById(R.id.week);
+        detailCource = (GridView) findViewById(R.id.courceDetail);
+        apiStores = ApiClient.retrofit().create(Api.class);
+        User user = UserUtil.getCurrentUser();
         Connector.getDatabase();
-        if (ScheduleUtil.isNeedGetData()){
-            Log.i("TAG",user.getData().getStudentKH()+user.getRemember_code_app());
+        if (ScheduleUtil.isNeedGetData()) {
             addSubscription(apiStores.loadSchedule(user.getData().getStudentKH(), user.getRemember_code_app()), new ApiCallback<Schedule>() {
                 @Override
                 public void onSuccess(Schedule model) {
-                    if (model.getMsg().equals("ok")){
+                    if (model.getMsg().equals("ok")) {
                         ScheduleUtil.saveSchedule(model.getData());
                         initView();
-                    }else {
+                    } else {
                         Toast.makeText(MainActivity.this, model.getMsg(), Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(String msg) {
-                    Toast.makeText(MainActivity.this, "查询出错"+msg, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "查询出错" + msg, Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
@@ -87,15 +86,13 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
-        }else {
-                initView();
+        } else {
+            initView();
         }
-
-
     }
 
-    private void initView(){
-        contents=ScheduleUtil.loadSchedule(ScheduleUtil.getCycle());
+    private void initView() {
+        contents = ScheduleUtil.loadSchedule(ScheduleUtil.getCycle());
         secondAdapter = new AbsGridAdapter(this);
         secondAdapter.setContent(contents, 5, 7);
         detailCource.setAdapter(secondAdapter);
@@ -103,21 +100,21 @@ public class MainActivity extends AppCompatActivity {
         spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, dataList);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerAdapter);
-        spinner.setSelection (ScheduleUtil.getCycle()-1);
+        spinner.setSelection(ScheduleUtil.getCycle() - 1);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view,int position, long id) {
-                if (position==20){
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 20) {
                     UserUtil.clearCurrentUser();
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
                     finish();
                 }
-                secondAdapter.update(ScheduleUtil.loadSchedule(position+1));
-                Log.i("TAG","position-1"+(position-1)+"cycle"+ScheduleUtil.getCycle());
-                if (position!=ScheduleUtil.getCycle()-1){
+                secondAdapter.update(ScheduleUtil.loadSchedule(position + 1));
+
+                if (position != ScheduleUtil.getCycle() - 1) {
                     weekTitle.setThisWeek(false);
-                }else {
+                } else {
                     weekTitle.setThisWeek(true);
                 }
             }
