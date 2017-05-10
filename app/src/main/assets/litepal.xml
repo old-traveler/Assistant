@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <dbname value="assistant" ></dbname>
+
+    <version value="1" ></version>
+
+    <list>
+        <mapping class="com.assistant.bean.DataBean"></mapping>
+    </list>
+</litepal>
